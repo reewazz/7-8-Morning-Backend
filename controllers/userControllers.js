@@ -1,5 +1,8 @@
 import User from "../model/User.js"
 import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken"
+
+export const secretKey = "apple"
 
 export const getUsers = async(req,res)=>{
     const allBlogs = await User.find()
@@ -48,8 +51,15 @@ export const login = async(req,res)=> {
         return res.send("Email or password incorrect")
     }
 
+        const token = jwt.sign({
+            id : user._id,
+            email : user.email,
+            fullName : user.fullName
+        },secretKey,{expiresIn: "1h"})
+
     res.json({
-        message : "Logged in successfully"
+        message : "Logged in successfully",
+        token
     })
 
 
