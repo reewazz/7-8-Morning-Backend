@@ -8,10 +8,14 @@ const blogSchema = new Schema({
     type : String,
     required : true
   },
-  author: String,
+  author: {
+    type : mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
   body: String,
     likes: Number,
-    category : String
+    category : String,
+    image : String
 });
 
 const Blog = mongoose.model('Blog', blogSchema);

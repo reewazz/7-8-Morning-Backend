@@ -1,7 +1,7 @@
 import Blog from "../model/Blog.js"
 
 export const getBlogs = async(req,res)=>{
-    const allBlogs = await Blog.find()
+    const allBlogs = await Blog.find().populate("author", "-password") 
   res.json(allBlogs)
 }
 

@@ -6,7 +6,7 @@ const router = express.Router()
 
 router.post("/create",createBlog)
 
-router.get("/getAll",verifyToken,getBlogs)
+router.get("/getAll",getBlogs)
 
 router.get("/getById/:id",getBlogById)
 
