@@ -1,12 +1,12 @@
 import express from "express"
 import { createBlog, deleteBlog, getBlogById, getBlogs, updateBlog } from "../controllers/blogControllers.js"
-import { verifyToken } from "../middleware/authMiddleware.js"
+import { isAdmin, verifyToken } from "../middleware/authMiddleware.js"
 
 const router = express.Router()
 
 router.post("/create",createBlog)
 
-router.get("/getAll",getBlogs)
+router.get("/getAll",verifyToken,isAdmin, getBlogs)
 
 router.get("/getById/:id",getBlogById)
 

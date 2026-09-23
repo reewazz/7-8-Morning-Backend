@@ -7,9 +7,13 @@ export const verifyToken = async(req,res,next)=> {
     console.log(header)
 
     const token = header.split(" ")[1]
-    const isVerified = jwt.verify(token,secretKey)
+    const decoded = jwt.verify(token,secretKey)
 
-    if(!isVerified) {
+    req.user = decoded
+
+    console.log(decoded,"decoded")
+
+    if(!decoded) {
         return res.status(403).json({
             message : "token invalid or expired"
         })
@@ -19,3 +23,14 @@ export const verifyToken = async(req,res,next)=> {
 
 
 }
+
+
+export const isAdmin = (req, res, next) => {
+  if (req.user?.role !== "ADMIN") {
+    return res.status(403).json({
+      message: "Access denied. Admin only."
+    });
+  }
+
+  next();
+};
