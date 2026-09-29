@@ -7,6 +7,11 @@ import { connectDB } from './config/db.js';
 import { getBlogs } from './controllers/blogControllers.js';
 import blogRoutes from "./routes/blogRoutes.js"
 import userRoutes from "./routes/userRoutes.js"
+import { seedAdmin } from './config/seedAdmin.js';
+import multer from 'multer';
+import { upload } from './config/file.js';
+import path from "path"
+import { fileURLToPath } from "url"
 
 const app = express()
 
@@ -691,6 +696,22 @@ const products  =  [
 
 
 connectDB()
+
+seedAdmin()
+
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+app.use("/uploads", express.static(path.join(__dirname, "uploads")))
+
+app.post('/profile', upload.single('image'),  (req, res, next)=> {
+
+console.log(req.file)
+res.send("file uploaded")
+
+})
+
 
 app.use("/blog",blogRoutes)
 app.use("/user",userRoutes)

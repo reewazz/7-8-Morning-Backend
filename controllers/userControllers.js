@@ -36,7 +36,8 @@ export const login = async(req,res)=> {
 
     //upper code is shorcut method
 
-    const emailFromBody = req.body.email
+    try{
+        const emailFromBody = req.body.email
     const passwordFromBody = req.body.password
 
     const user = await User.findOne({email:emailFromBody})
@@ -68,6 +69,13 @@ export const login = async(req,res)=> {
     })
 
 
+    }
+    catch(err) {
+        console.error(err)
+        return res.status(501).json({
+            message : "Error occured"
+        })
+    }
 }
 
 

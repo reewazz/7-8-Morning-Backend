@@ -1,13 +1,22 @@
 import Blog from "../model/Blog.js"
 
 export const getBlogs = async(req,res)=>{
+    const allBlogs = await Blog.find({status:true}).populate("author", "-password") 
+  res.json(allBlogs)
+}
+export const getBlogsForAdmin = async(req,res)=>{
     const allBlogs = await Blog.find().populate("author", "-password") 
   res.json(allBlogs)
 }
 
 export const createBlog = async(req,res)=>{
-  const createdBlog = await Blog.create(req.body)
+  console.log(req.file)
+  const createdBlog = await Blog.create({
+    ...req.body,
+    image:req.file.path
+  })
   res.json(createdBlog)
+  res.send("file upload")
 }
 
 export const getBlogById = async(req,res)=>{

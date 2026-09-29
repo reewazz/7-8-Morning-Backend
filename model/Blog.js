@@ -15,8 +15,16 @@ const blogSchema = new Schema({
   body: String,
     likes: Number,
     category : String,
-    image : String
+    image : String,
+    status:{
+      type:Boolean,
+      default : true
+    }
+  
 });
 
 const Blog = mongoose.model('Blog', blogSchema);
 export default Blog
+
+
+
