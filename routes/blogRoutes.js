@@ -7,7 +7,7 @@ const router = express.Router()
 
 router.post("/create",upload.single("image"), createBlog)
 
-router.get("/getAll",verifyToken,isAdmin, getBlogs)
+router.get("/getAll",verifyToken, getBlogs)
 
 router.get("/getById/:id",getBlogById)
 
